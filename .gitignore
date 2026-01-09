@@ -55,11 +55,18 @@ reports/
 docker-compose.override.yml
 
 # ===============================
-# Node (if frontend exists)
+# Node / Frontend
 # ===============================
 node_modules/
 dist/
 build/
+front/
+
+# ===============================
+# Firebase
+# ===============================
+.firebase/
+firebase.json
 
 # ===============================
 # Secrets / keys
