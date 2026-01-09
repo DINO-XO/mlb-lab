@@ -21,9 +21,22 @@ public class AuthService {
         this.technicianRepository = technicianRepository;
     }
 
-    // ================= REGISTER (PATIENT ONLY) =================
-    public User register(RegisterRequest request) {
+    // ================= REGISTER (PATIENT / TECHNICIAN) =================
+    public Object register(RegisterRequest request) {
 
+        // 🔐 TECHNICIAN REGISTER
+        if (Role.TECHNICIAN.name().equalsIgnoreCase(request.getRole())) {
+
+            Technician technician = new Technician();
+            technician.setName(request.getName());
+            technician.setEmail(request.getEmail());
+            technician.setPassword(request.getPassword());
+            // ❌ NO setRole() needed
+
+            return technicianRepository.save(technician);
+        }
+
+        // 🔐 PATIENT REGISTER
         User user = new User();
         user.setName(request.getName());
         user.setEmail(request.getEmail());
@@ -33,7 +46,8 @@ public class AuthService {
         return userRepository.save(user);
     }
 
-    // ================= LOGIN (ROLE AWARE) =================
+
+    // ================= LOGIN (ROLE AWARE – UNCHANGED LOGIC) =================
     public Object login(LoginRequest request) {
 
         // 🔐 PATIENT LOGIN
