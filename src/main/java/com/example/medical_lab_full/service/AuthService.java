@@ -33,21 +33,25 @@ public class AuthService {
         return userRepository.save(user);
     }
 
-    // ================= LOGIN (PATIENT + TECHNICIAN) =================
+    // ================= LOGIN (ROLE AWARE) =================
     public Object login(LoginRequest request) {
 
-        // 🔹 Try PATIENT login
-        User patient = userRepository.findByEmail(request.getEmail()).orElse(null);
-        if (patient != null && patient.getPassword().equals(request.getPassword())) {
-            return patient;
+        // 🔐 PATIENT LOGIN
+        if (Role.PATIENT.name().equalsIgnoreCase(request.getRole())) {
+            return userRepository.findByEmail(request.getEmail())
+                    .filter(u -> u.getPassword().equals(request.getPassword()))
+                    .orElseThrow(() ->
+                            new RuntimeException("Invalid patient credentials"));
         }
 
-        // 🔹 Try TECHNICIAN login
-        Technician technician = technicianRepository.findByEmail(request.getEmail()).orElse(null);
-        if (technician != null && technician.getPassword().equals(request.getPassword())) {
-            return technician;
+        // 🔐 TECHNICIAN LOGIN
+        if (Role.TECHNICIAN.name().equalsIgnoreCase(request.getRole())) {
+            return technicianRepository.findByEmail(request.getEmail())
+                    .filter(t -> t.getPassword().equals(request.getPassword()))
+                    .orElseThrow(() ->
+                            new RuntimeException("Invalid technician credentials"));
         }
 
-        throw new RuntimeException("Invalid email or password");
+        throw new RuntimeException("Invalid role");
     }
 }
