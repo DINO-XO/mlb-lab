@@ -11,8 +11,9 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins(
-                        "https://mlb-frontend.firebaseapp.com", // ✅ ADDED
+                        "https://mlb-frontend.firebaseapp.com",
                         "https://mlb-frontend.web.app",
+                        "https://clone-475a0.web.app", // ✅ NEW
                         "http://localhost:3000"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")

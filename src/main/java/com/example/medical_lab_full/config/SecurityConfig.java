@@ -35,8 +35,9 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowedOrigins(List.of(
-                "https://mlb-frontend.firebaseapp.com", // ✅ ADDED
+                "https://mlb-frontend.firebaseapp.com",
                 "https://mlb-frontend.web.app",
+                "https://clone-475a0.web.app",   // ✅ NEW (THIS FIXES ERROR)
                 "http://localhost:3000"
         ));
 
