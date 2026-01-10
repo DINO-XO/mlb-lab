@@ -18,28 +18,24 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                // ✅ ENABLE CORS
                 .cors(cors -> {})
-                // ❌ Disable CSRF (needed for REST APIs)
                 .csrf(AbstractHttpConfigurer::disable)
-                // ✅ Allow all requests for now
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().permitAll()
                 )
-                // ❌ Disable default login pages
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable);
 
         return http.build();
     }
 
-    // ✅ CORS CONFIGURATION FOR SPRING SECURITY
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
 
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowedOrigins(List.of(
+                "https://mlb-frontend.firebaseapp.com", // ✅ ADDED
                 "https://mlb-frontend.web.app",
                 "http://localhost:3000"
         ));
