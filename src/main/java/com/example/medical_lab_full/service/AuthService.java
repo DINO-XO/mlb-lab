@@ -31,7 +31,6 @@ public class AuthService {
             technician.setName(request.getName());
             technician.setEmail(request.getEmail());
             technician.setPassword(request.getPassword());
-            // ❌ NO setRole() needed
 
             return technicianRepository.save(technician);
         }
@@ -46,8 +45,7 @@ public class AuthService {
         return userRepository.save(user);
     }
 
-
-    // ================= LOGIN (ROLE AWARE – UNCHANGED LOGIC) =================
+    // ================= LOGIN =================
     public Object login(LoginRequest request) {
 
         // 🔐 PATIENT LOGIN
